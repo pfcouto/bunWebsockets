@@ -28,9 +28,7 @@ const server = Bun.serve<{ device: string }>({
     }
 
     if (req.url.endsWith("/vehicleArrived")) {
-      const message = {
-        data: "Vehicle arrived successfully at its destination.",
-      };
+      const message = "Vehicle arrived successfully at its destination.";
 
       const messageString = JSON.stringify(message);
 
@@ -83,9 +81,8 @@ const server = Bun.serve<{ device: string }>({
             console.error("Error sending HTTP GET request:", error);
           });
       }
-      const msg = {
-        data: parsedMessage,
-      };
+      const msg = parsedMessage;
+
       const msgString = JSON.stringify(msg);
       // the server re-broadcasts incoming messages to everyone
       console.log(`Publishing to commsIplNova: ${msgString}`);
