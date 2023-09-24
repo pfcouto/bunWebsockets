@@ -13,6 +13,7 @@ function getDeviceFromCookies(cookiesString: string | null) {
 }
 
 const server = Bun.serve<{ device: string }>({
+  port: 10000,
   fetch(req, server) {
     const cookies = req.headers.get("cookie");
 
