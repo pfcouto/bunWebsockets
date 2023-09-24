@@ -15,8 +15,6 @@ function getDeviceFromCookies(cookiesString: string | null) {
 const server = Bun.serve<{ device: string }>({
   port: 10000,
   fetch(req, server) {
-    console.log(`req: ${req}`);
-
     const cookies = req.headers.get("cookie");
 
     //* FROM URL
@@ -31,22 +29,15 @@ const server = Bun.serve<{ device: string }>({
 
     if (req.url.endsWith("/vehicleArrived")) {
       const message = {
-        status: "Vehicle arrived successfully at its destination.",
+        data: "Vehicle arrived successfully at its destination.",
       };
 
-      let parsedMessage: any;
-      try {
-        const messageString = JSON.stringify(message);
-        parsedMessage = JSON.parse(String(messageString));
-      } catch (error) {
-        console.error("Error parsing message:", error);
-        return;
-      }
+      const messageString = JSON.stringify(message);
 
-      const { status } = parsedMessage;
+      console.log(`Publishing to commsIplNova: ${messageString}`);
+      server.publish("commsIplNova", messageString);
 
-      console.log(`Publishing to commsIplNova: ${JSON.stringify(status)}`);
-      server.publish("commsIplNova", `${JSON.stringify(status)}`);
+      return new Response("Hello world");
     }
 
     //* FROM COOKIES
@@ -85,11 +76,13 @@ const server = Bun.serve<{ device: string }>({
             console.error("Error sending HTTP GET request:", error);
           });
       }
-
-      const msg = `${ws.data.device}: ${message}`;
-      console.log(msg);
+      const msg = {
+        data: message,
+      };
+      const msgString = JSON.stringify(msg);
       // the server re-broadcasts incoming messages to everyone
-      ws.publish("commsIplNova", `${msg}`);
+      console.log(`Publishing to commsIplNova: ${msgString}`);
+      ws.publish("commsIplNova", msgString);
     },
     close(ws) {
       const msg = `${ws.data.device} has left the chat`;
