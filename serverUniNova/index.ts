@@ -49,8 +49,6 @@ const server = Bun.serve<{ device: string }>({
   },
   websocket: {
     open(ws) {
-      console.log(`ws: ${ws}`);
-
       const msg = `${ws.data.device} has entered the chat: commsIplNova`;
       console.log(msg);
       ws.subscribe("commsIplNova");
@@ -58,6 +56,15 @@ const server = Bun.serve<{ device: string }>({
     },
     message(ws, message) {
       // if "IPL" in ws.data.device
+
+      let parsedMessage: any;
+      try {
+        parsedMessage = JSON.parse(String(message));
+      } catch (error) {
+        console.error("Error parsing message:", error);
+        return;
+      }
+
       if (
         typeof ws.data.device === "string" &&
         ws.data.device.includes("IPL")
@@ -77,7 +84,7 @@ const server = Bun.serve<{ device: string }>({
           });
       }
       const msg = {
-        data: message,
+        data: parsedMessage,
       };
       const msgString = JSON.stringify(msg);
       // the server re-broadcasts incoming messages to everyone
