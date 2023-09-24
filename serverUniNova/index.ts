@@ -95,4 +95,4 @@ const server = Bun.serve<{ device: string }>({
   },
 });
 
-console.log(`Listening on ${server.hostname}:${server.port}`);
+console.log(`Listening RENDER on ${server.hostname}:${server.port}`);
