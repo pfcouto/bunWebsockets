@@ -119,6 +119,8 @@ const socket = new WebSocket("ws://127.0.0.1:3000", {
   headers: {
     // custom headers
     cookie: "topics=manager;device=manager",
+    Upgrade: "websocket",
+    Connection: "Upgrade",
   },
 });
 

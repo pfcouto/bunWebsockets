@@ -15,6 +15,8 @@ function getDeviceFromCookies(cookiesString: string | null) {
 const server = Bun.serve<{ device: string }>({
   port: 10000,
   fetch(req, server) {
+    console.log(`req: ${req}`);
+
     const cookies = req.headers.get("cookie");
 
     //* FROM URL
@@ -29,8 +31,7 @@ const server = Bun.serve<{ device: string }>({
 
     if (req.url.endsWith("/vehicleArrived")) {
       const message = {
-        topic: "website",
-        status: "vehicle arrived at its destination",
+        status: "Vehicle arrived successfully at its destination.",
       };
 
       let parsedMessage: any;
@@ -57,6 +58,8 @@ const server = Bun.serve<{ device: string }>({
   },
   websocket: {
     open(ws) {
+      console.log(`ws: ${ws}`);
+
       const msg = `${ws.data.device} has entered the chat: commsIplNova`;
       console.log(msg);
       ws.subscribe("commsIplNova");
