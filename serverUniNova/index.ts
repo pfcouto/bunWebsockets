@@ -67,15 +67,13 @@ const server = Bun.serve<{ device: string }>({
 
       const msg = parsedMessage;
 
-      const msgString = JSON.stringify(msg);
-
       if (
         typeof ws.data.device === "string" &&
         ws.data.device.includes("IPL")
       ) {
         // Do something if "IPL" is present in the device property
 
-        fetch(`http://localhost:3000/move/${msgString}`)
+        fetch(`http://localhost:3000/move/${msg}`)
           .then((response) => {
             if (!response.ok) {
               console.error("Failed to send HTTP GET request");
@@ -88,7 +86,7 @@ const server = Bun.serve<{ device: string }>({
           });
       }
 
-      const msgData = { data: msgString };
+      const msgData = { data: msg };
       const msgDataString = JSON.stringify(msgData);
 
       // the server re-broadcasts incoming messages to everyone
