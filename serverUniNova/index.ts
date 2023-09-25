@@ -50,7 +50,7 @@ const server = Bun.serve<{ device: string }>({
       const msg = `${ws.data.device} has entered the chat: commsIplNova`;
       console.log(msg);
       ws.subscribe("commsIplNova");
-      ws.publish("commsIplNova", msg);
+      // ws.publish("commsIplNova", msg);
     },
     message(ws, message) {
       // if "IPL" in ws.data.device
