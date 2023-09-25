@@ -27,16 +27,16 @@ const server = Bun.serve<{ device: string }>({
       if (success) return undefined;
     }
 
-    if (req.url.endsWith("/vehicleArrived")) {
-      const message = "Vehicle arrived successfully at its destination.";
+    // if (req.url.endsWith("/vehicleArrived")) {
+    //   const message = "Vehicle arrived successfully at its destination.";
 
-      const messageString = JSON.stringify(message);
+    //   const messageString = JSON.stringify(message);
 
-      console.log(`Publishing to commsIplNova: ${messageString}`);
-      server.publish("commsIplNova", messageString);
+    //   console.log(`Publishing to commsIplNova: ${messageString}`);
+    //   server.publish("commsIplNova", messageString);
 
-      return new Response("Hello world");
-    }
+    //   return new Response("Hello world");
+    // }
 
     //* FROM COOKIES
     const deviceCookies = getDeviceFromCookies(cookies);
@@ -63,24 +63,24 @@ const server = Bun.serve<{ device: string }>({
         return;
       }
 
-      if (
-        typeof ws.data.device === "string" &&
-        ws.data.device.includes("IPL")
-      ) {
-        // Do something if "IPL" is present in the device property
+      // if (
+      //   typeof ws.data.device === "string" &&
+      //   ws.data.device.includes("IPL")
+      // ) {
+      //   // Do something if "IPL" is present in the device property
 
-        fetch("http://localhost:3000/move/100")
-          .then((response) => {
-            if (!response.ok) {
-              console.error("Failed to send HTTP GET request");
-            } else {
-              console.log("Making robot move forward");
-            }
-          })
-          .catch((error) => {
-            console.error("Error sending HTTP GET request:", error);
-          });
-      }
+      //   fetch("http://localhost:3000/move/100")
+      //     .then((response) => {
+      //       if (!response.ok) {
+      //         console.error("Failed to send HTTP GET request");
+      //       } else {
+      //         console.log("Making robot move forward");
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error sending HTTP GET request:", error);
+      //     });
+      // }
 
       const msgString = JSON.stringify(parsedMessage);
       // the server re-broadcasts incoming messages to everyone
