@@ -115,14 +115,17 @@
 import { log } from "console";
 import * as readline from "readline";
 
-const socket = new WebSocket("ws://127.0.0.1:3000", {
-  headers: {
-    // custom headers
-    cookie: "topics=manager;device=manager",
-    Upgrade: "websocket",
-    Connection: "Upgrade",
-  },
-});
+const socket = new WebSocket(
+  "wss://server-ipl-nova.onrender.com?device=insomniaFake",
+  {
+    headers: {
+      // custom headers
+      cookie: "topics=manager;device=manager",
+      Upgrade: "websocket",
+      Connection: "Upgrade",
+    },
+  }
+);
 
 let waitForAck: boolean = false;
 
