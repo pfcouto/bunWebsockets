@@ -28,9 +28,7 @@ const server = Bun.serve<{ device: string }>({
     }
 
     if (req.url.endsWith("/vehicleArrived")) {
-      const message = {
-        data: "Vehicle arrived successfully at its destination.",
-      };
+      const message = "Vehicle arrived successfully at its destination.";
 
       const messageString = JSON.stringify(message);
 
@@ -65,15 +63,13 @@ const server = Bun.serve<{ device: string }>({
         return;
       }
 
-      const msg = parsedMessage;
-
       if (
         typeof ws.data.device === "string" &&
         ws.data.device.includes("IPL")
       ) {
         // Do something if "IPL" is present in the device property
 
-        fetch(`http://localhost:3000/move/${msg}`)
+        fetch("http://localhost:3000/move/100")
           .then((response) => {
             if (!response.ok) {
               console.error("Failed to send HTTP GET request");
@@ -86,12 +82,10 @@ const server = Bun.serve<{ device: string }>({
           });
       }
 
-      const msgData = { data: msg };
-      const msgDataString = JSON.stringify(msgData);
-
+      const msgString = JSON.stringify(parsedMessage);
       // the server re-broadcasts incoming messages to everyone
-      console.log(`Publishing to commsIplNova: ${msgDataString}`);
-      ws.publish("commsIplNova", msgDataString);
+      console.log(`Publishing to commsIplNova: ${msgString}`);
+      ws.publish("commsIplNova", msgString);
     },
     close(ws) {
       const msg = `${ws.data.device} has left the chat`;
