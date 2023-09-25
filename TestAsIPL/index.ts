@@ -1,4 +1,4 @@
-const socket = new WebSocket("wss://ws.pfcouto.eu.org?device=NOVA");
+const socket = new WebSocket("wss://ws.pfcouto.eu.org?device=IPL");
 
 function sendMessage() {
   const data = {

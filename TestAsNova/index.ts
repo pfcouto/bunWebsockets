@@ -1,4 +1,4 @@
-const socket = new WebSocket("wss://ws.pfcouto.eu.org?device=IPL");
+const socket = new WebSocket("wss://ws.pfcouto.eu.org?device=NOVA");
 
 // Function to sleep for 2 seconds
 function sleep(ms: any) {
