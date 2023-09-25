@@ -1,4 +1,4 @@
-# serveruninova
+# testasnova
 
 To install BUN:
 

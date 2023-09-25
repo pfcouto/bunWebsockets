@@ -1,17 +1,6 @@
-# serveruninova
+# dtrobot
 
-To install BUN:
 
-    HomeBrew
-    ```
-    brew tap oven-sh/bun # for macOS and Linux
-    brew install bun
-    ```
-
-    Curl
-    ```
-    curl -fsSL https://bun.sh/install | bash
-    ```
 
 To install dependencies:
 
