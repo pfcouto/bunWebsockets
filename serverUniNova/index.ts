@@ -22,6 +22,9 @@ const server = Bun.serve<{ device: string }>({
     const urlParams = new URLSearchParams(url.search);
     const deviceURL = urlParams.get("device");
 
+    console.log("deviceURL", deviceURL);
+    
+
     if (deviceURL) {
       const success = server.upgrade(req, { data: { device: deviceURL } });
       if (success) return undefined;
@@ -54,6 +57,8 @@ const server = Bun.serve<{ device: string }>({
     },
     message(ws, message) {
       // if "IPL" in ws.data.device
+
+      console.log("Message received:", message);
 
       let parsedMessage: any;
       try {
