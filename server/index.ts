@@ -38,6 +38,8 @@ const server = Bun.serve<{ device: string } & { topics: Topic[] }>({
     const topicsParam = urlParams.get("topics");
     const deviceParam = urlParams.get("device");
 
+
+
     if (topicsParam && deviceParam) {
       // If topics and device are provided in the URL, use them
       const topics = topicsParam.split(",").map((topic, index) => ({
@@ -49,26 +51,26 @@ const server = Bun.serve<{ device: string } & { topics: Topic[] }>({
       if (success) return undefined;
     }
 
-    if (req.url.endsWith("/vehicleReady")) {
-      const message = {
-        topic: "website",
-        status: "vehicle reached destination",
-      };
+    // if (req.url.endsWith("/vehicleReady")) {
+    //   const message = {
+    //     topic: "website",
+    //     status: "vehicle reached destination",
+    //   };
 
-      let parsedMessage: any;
-      try {
-        const messageString = JSON.stringify(message);
-        parsedMessage = JSON.parse(String(messageString));
-      } catch (error) {
-        console.error("Error parsing message:", error);
-        return;
-      }
+    //   let parsedMessage: any;
+    //   try {
+    //     const messageString = JSON.stringify(message);
+    //     parsedMessage = JSON.parse(String(messageString));
+    //   } catch (error) {
+    //     console.error("Error parsing message:", error);
+    //     return;
+    //   }
 
-      const { topic, status } = parsedMessage;
+    //   const { topic, status } = parsedMessage;
 
-      console.log(`Publishing to ${topic}: ${JSON.stringify(status)}`);
-      server.publish(`${topic}`, `${JSON.stringify(status)}`);
-    }
+    //   console.log(`Publishing to ${topic}: ${JSON.stringify(status)}`);
+    //   server.publish(`${topic}`, `${JSON.stringify(status)}`);
+    // }
 
     const success = server.upgrade(req, {
       data: { topics: cookiesObject.topics, device: cookiesObject.device },
@@ -100,20 +102,20 @@ const server = Bun.serve<{ device: string } & { topics: Topic[] }>({
       }
 
       const { topic, data } = parsedMessage;
-      if (data["command"] === "V") {
-        fetch("http://localhost:3000/move/100")
-          .then((response) => {
-            if (!response.ok) {
-              console.error("Failed to send HTTP GET request");
-            } else {
-              log("Making robot move forward");
-            }
-          })
-          .catch((error) => {
-            console.error("Error sending HTTP GET request:", error);
-          });
-        return;
-      }
+      // if (data["command"] === "V") {
+      //   fetch("http://localhost:3000/move/100")
+      //     .then((response) => {
+      //       if (!response.ok) {
+      //         console.error("Failed to send HTTP GET request");
+      //       } else {
+      //         log("Making robot move forward");
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error sending HTTP GET request:", error);
+      //     });
+      //   return;
+      // }
 
       if (parsedMessage && topic) {
         console.log(`Publishing to ${topic}: ${JSON.stringify(data)}`);
