@@ -13,7 +13,7 @@ function getDeviceFromCookies(cookiesString: string | null) {
 }
 
 const server = Bun.serve<{ device: string }>({
-  port: 10000,
+  port: 3002,
   fetch(req, server) {
     const cookies = req.headers.get("cookie");
 
@@ -21,9 +21,6 @@ const server = Bun.serve<{ device: string }>({
     const url = new URL(req.url, `http://${req.headers.get("host")}`);
     const urlParams = new URLSearchParams(url.search);
     const deviceURL = urlParams.get("device");
-
-    console.log("deviceURL", deviceURL);
-    
 
     if (deviceURL) {
       const success = server.upgrade(req, { data: { device: deviceURL } });

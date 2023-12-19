@@ -38,8 +38,6 @@ const server = Bun.serve<{ device: string } & { topics: Topic[] }>({
     const topicsParam = urlParams.get("topics");
     const deviceParam = urlParams.get("device");
 
-
-
     if (topicsParam && deviceParam) {
       // If topics and device are provided in the URL, use them
       const topics = topicsParam.split(",").map((topic, index) => ({
